@@ -1,0 +1,133 @@
+{% extends '../../base.html' %}
+{%load static%}
+{%block title%} Inventario Harware {%endblock%}
+{%block insertcss%}
+<link rel="stylesheet" href="{% static 'css/usr.css' %}">
+{%endblock%}
+{%block content%}
+<div class="modal-dialog modal-lg text-center">
+    <div class="col-12 main-section">
+        <div class="modal-content">
+            <div class="col-12 user-img">
+                <h1>ACTUALIZAR HARDWARE: ESTABILIZADOR O UPS</h1>
+            </div>
+            {%if messages%}
+            {%for message in messages%}
+            <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert">
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+            <form class="col-12" action="/Hardware/Estabilizador/Actualizar/{{querys.id_estabilizador}}/" method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Marca del Equipo:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" value="{{querys.marca_estabilizador}}" id="codigoactivo"
+                            name="marca_estabilizador" maxlength="15" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Potencia en Watts:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="codigoactivo" value="{{querys.potencia_watts}}"
+                            name="potencia_watts" maxlength="10">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Potencia en VA:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="potencia_va" value="{{querys.potencia_va}}"
+                            maxlength="10">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Tipo de Equipo:</label>
+                    <div class="col-8">
+                        <select id="sestado" class="form-control" name="tipo_estabilizador">
+                            {%if querys.tipo_estabilizador == "Estabillizador"%}
+                            <option value="Estabilizador" selected>Estabilizador</option>
+                            <option value="UPS">UPS</option>
+                            {%else%}
+                            <option value="Estabilizador">Estabilizador</option>
+                            <option value="UPS" selected>UPS</option>}
+                            {%endif%}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Numero de Serie:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="numero_serie" value="{{querys.numero_serie}}"
+                            id="" maxlength="15" onkeypress='return event.charCode >= 46 && event.charCode <= 57'>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Codigo Activo:</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="codigo_activo" value="{{querys.codigo_activo}}"
+                            id="" maxlength="12" onkeypress='return event.charCode >= 46 && event.charCode <= 57'>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Estado:</label>
+                    <div class="col-8">
+                        <select id="sestado" class="form-control" name="estado_estabilizador">
+                            {%if querys.estado_estabilizador == "Nuevo"%}
+                            <option value="Nuevo" selected>Nuevo</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Malo">Malo</option>
+                            {%elif querys.estado_estabilizador == "Regular"%}
+                            <option value="Nuevo">Nuevo</option>
+                            <option value="Regular" selected>Regular</option>
+                            <option value="Malo">Malo</option>
+                            {%else%}
+                            <option value="Nuevo">Nuevo</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Malo" selected>Malo</option>
+                            {%endif%}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Area:</label>
+                    <div class="col-8">
+                        <select id="sarea" class="form-control" name="">
+                            {%for q in queryarea%}
+                            {% if area.id_area == q.id_area %}
+                            <option value="{{q.id_area}}" selected>{{q.nombre_area}}</option>
+                            {%else%}
+                            <option value="{{q.id_area}}">{{q.nombre_area}}</option>
+                            {% endif %}
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Empleado Final</label>
+                    <div class="col-8">
+                        <select id="sempleado" class="form-control" name="dni_empleado">
+                            <option id="ev" value="{{empleado.dni_empleado}}" selected>{{empleado.nombre_empleado}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label"></label>
+                    <div class="col-8">
+                        <button type="submit" class="btn btn-primary form-control"><i class="fas fa-sign-in-alt"></i>
+                            Actualizar el Inventario </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {%endblock%}
+    {%block insertjs%}
+    <script src="{% static 'js/jqu.js' %}"></script>
+    {%endblock%}

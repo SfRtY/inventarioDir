@@ -1,0 +1,10 @@
+python --version
+python -m django --version
+
+pip uninstall paquete
+pip freeze
+
+para instalar el cliente mysql en python 3.8, descargar el paquete
+de un sitio no oficial
+
+manage.py inspectdb

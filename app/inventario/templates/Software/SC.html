@@ -1,0 +1,107 @@
+{% extends '../base.html' %}
+{%load static%}
+{%block title%} Inventario Software {%endblock%}
+{%block insertcss%}
+<link rel="stylesheet" href="{% static 'css/usr.css' %}">
+{%endblock%}
+{%block content%}
+<div class="modal-dialog modal-lg text-center">
+    <div class="col-12 main-section">
+        <div class="modal-content">
+            <div class="col-12 user-img">
+                <h1>INVENTARIO SOFTWARE</h1>
+            </div>
+            {%if messages%}
+            {%for message in messages%}
+            <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert">
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+            <form class="col-12" action="/Software/SC/" method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Nombre del Software</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="codigoactivo" name="nombre_software" maxlength="25"
+                            required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Version del Software</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="codigoactivo" name="version_software" maxlength="10"
+                            onkeypress='return event.charCode >= 46 && event.charCode <= 57' required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Licencia de software</label>
+                    <div class="col-8">
+                        <select id="sestado" class="form-control" name="licencia_software">
+                            <option value="Si" selected>Si</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Tipo de Equipo</label>
+                    <div class="col-8">
+                        <select id="sestado" class="form-control" name="tipo_equipo_s">
+                            <option value="Pc" selected>Pc</option>
+                            <option value="Laptop">Laptop</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Codigo del Bien</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="codigo_bien_s" id="" maxlength="12"
+                            onkeypress='return event.charCode >= 46 && event.charCode <= 57' required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Sistema Operativo</label>
+                    <div class="col-8">
+                        <select id="sestado" class="form-control" name="sistema_operativo">
+                            <option value="Windows 10" selected>Windows 10</option>
+                            <option value="Windows 8.1">Windows 8.1</option>
+                            <option value="Windows 7">Windows 7</option>
+                            <option value="Windows XP">Windows XP</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Area:</label>
+                    <div class="col-8">
+                        <select id="sarea" class="form-control" name="">
+                            {%for q in queryarea%}
+                            {% if forloop.first %}
+                            <option value="{{q.id_area}}" selected>{{q.nombre_area}}</option>
+                            {%else%}
+                            <option value="{{q.id_area}}">{{q.nombre_area}}</option>
+                            {% endif %}
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label">Empleado Final</label>
+                    <div class="col-8">
+                        <select id="sempleado" class="form-control" name="dni_empleado">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-4 col-form-label"></label>
+                    <div class="col-8">
+                        <button type="submit" class="btn btn-primary form-control"><i class="fas fa-sign-in-alt"></i>
+                            Registrar al Inventario </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {%endblock%}
+    {%block insertjs%}
+    <script src="{% static 'js/jqnw.js' %}"></script>
+    {%endblock%}
