@@ -1,0 +1,66 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>
+      INGRESAR INVENTARIO
+    </title>
+    <meta charset="UTF-8" />
+    <meta name="title" content="Título de la WEB" />
+    <meta name="description" content="Descripción de la WEB" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'imagenes/favicon.ico' %}"
+    />
+    <link rel="stylesheet" href="{%static 'css/estilos.css'%}" />
+    {%load bootstrap4%} {%bootstrap_css%}
+  </head>
+  <body>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="my-section">
+        <div class="modal-content">
+          <div class="text-center">
+            <img
+              src="{%static 'imagenes/logo-diresa.png'%}"
+              class="imagen-login"
+            />
+            <h5 class="modal-title">INICIO DE SESION</h5>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div class="form-group row">
+                <label for="" class="col-sm-3 col-form-label">Usuario: </label>
+                <div class="col-sm-9">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Usuario"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3 col-form-label"
+                  >Contraseña:
+                </label>
+                <div class="col-sm-9">
+                  <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Contraseña"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  INGRESAR
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -8,10 +8,19 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.http import JsonResponse
 from django.contrib import messages
 
+""" Autenticacion por tokens """
+
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes,authentication_classes
+
 def AreaData():
     queryset=Area.objects.all()
     return queryset
 
+@api_view(['GET'])
+#@permission_classes((IsAuthenticated, ))
+#@authentication_classes((TokenAuthentication, ))
 def PCIndex(request):
     return render(request,'Hardware/HardwarePC/PCC.html',{'queryarea':AreaData()})
 

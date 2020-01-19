@@ -23,11 +23,12 @@ from inventario.Views import HwPcView,HwEqView,HwUpsView
 router=routers.DefaultRouter()
 router.register(r'CSoftware',views.SoftwareView)
 router.register(r'Area',views.AreaView)
+router.register(r'User',views.UserView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(router.urls)),
-    path('',HwPcView.PCIndex,name='index'),
+    path('',views.index,name='index'),
     path('Hardware/IngresarCPU/',HwPcView.PCIndex,name='PCC'),
     path('Hardware/PCC/',HwPcView.PcGetAllCreate),
     path('Hardware/Buscar/CPU/',HwPcView.BPCIndex,name="PCR"),
@@ -58,4 +59,6 @@ urlpatterns = [
     
     path('obtener/<idarea>/',views.EmpleadoJson, name="prueba"),
     path('Empleado/<idarea>/',views.EmpleadoDetail),
+
+    path('User/Login/',views.UserLoginView.as_view(),name='login'),
 ]

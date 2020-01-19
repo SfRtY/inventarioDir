@@ -1,0 +1,37 @@
+body{
+    background: url(../imagenes/196199.jpg) no-repeat center center fixed !important;
+    background-size: cover;
+}
+
+.my-section{
+    margin: 0 auto;
+    padding: 0px;
+}
+
+.modal-dialog .modal-content{
+    background-color: darkslategray;
+    opacity: .90;
+    padding: 0 20px;
+    box-shadow: 0px 0px 3px gray;
+}
+
+.imagen-login{
+    margin-top: -100px;
+    width: 200px;
+    height: 200px;
+}
+.modal-title{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+}
+.modal-body label{
+    color: white;
+    padding-left: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-body button{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+}

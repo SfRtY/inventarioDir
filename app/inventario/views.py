@@ -1,16 +1,22 @@
+"""Importando de rest_framework"""
 from rest_framework import viewsets,mixins,status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import SoftwareSerializer,AreaSerializer,EmpleadoSerializer
+from rest_framework.views import APIView
+"""Importando los serializadores y modelos a utilizar"""
+from .serializers import SoftwareSerializer,AreaSerializer,EmpleadoSerializer,UserSerializer,UserLoginSerializer 
 from .models import Software,Area,Empleado
+from django.contrib.auth.models import User
+
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import JsonResponse
 from django.contrib import messages
 
 from django.urls import reverse_lazy,reverse
-# Create your views here.
+
+
 def index(request):
-    return render(request,'Hardware/CH.html')
+    return render(request,'Login/Login.html')
 
 def AreaData():
     queryset=Area.objects.all()
@@ -125,3 +131,22 @@ class SoftwareView(mixins.CreateModelMixin,viewsets.GenericViewSet):
 class AreaView(viewsets.ModelViewSet):
     serializer_class=AreaSerializer
     queryset=Area.objects.all()
+
+class UserView(viewsets.ModelViewSet):
+    serializer_class=UserSerializer
+    queryset=User.objects.all()
+
+class UserLoginView(APIView):
+    
+    def post(self,request):
+        serializer=UserLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user,token=serializer.save()
+        print('usuario',user)
+        print('token',token)
+        data={
+            'status':'ok',
+            'token': token
+        }
+        return Response(data,status=status.HTTP_201_CREATED)
+
