@@ -41,11 +41,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.Serializer):
-    email = serializers.CharField()
+    username = serializers.CharField()
     password = serializers.CharField(min_length=8, max_length=64)
 
     def validate(self, data):
-        user = authenticate(username=data['email'], password=data['password'])
+        user = authenticate(username=data['username'], password=data['password'])
         if not user:
             raise serializers.ValidationError('credenciales invalidos')
         self.context['user'] = user
@@ -53,6 +53,6 @@ class UserLoginSerializer(serializers.Serializer):
 
     def create(self, data):
         token, create = Token.objects.get_or_create(user=self.context['user'])
-        print(token)
-        print(create)
+        print('serializer token',token)
+        print('serializer create',create)
         return self.context['user'], token.key

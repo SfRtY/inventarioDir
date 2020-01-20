@@ -1,37 +1,53 @@
-body{
-    background: url(../imagenes/196199.jpg) no-repeat center center fixed !important;
-    background-size: cover;
+body {
+  background: url(../imagenes/196199.jpg) no-repeat center center fixed !important;
+  background-size: cover;
 }
 
-.my-section{
-    margin: 0 auto;
-    padding: 0px;
+.my-section {
+  margin: 0 auto;
+  padding: 0px;
 }
 
-.modal-dialog .modal-content{
-    background-color: darkslategray;
-    opacity: .90;
-    padding: 0 20px;
-    box-shadow: 0px 0px 3px gray;
+.modal-dialog .modal-content {
+  background-color: white;
+  opacity: 0.9;
+  padding: 0 20px;
+  box-shadow: 0px 0px 3px gray;
 }
 
-.imagen-login{
-    margin-top: -100px;
-    width: 200px;
-    height: 200px;
-}
-.modal-title{
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-}
-.modal-body label{
-    color: white;
-    padding-left: 1px;
-    font-family: Arial, Helvetica, sans-serif;
+::placeholder {
+  color: gray !important;
+  opacity: 0.45 !important;
 }
 
-.modal-body button{
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0 auto;
+input,
+select,
+textarea {
+  color: black !important;
+  font-size: 18px;
+  border-color: gray !important;
+}
+
+.imagen-login {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 200px;
+  height: 200px;
+}
+.modal-title {
+  color: black;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+}
+.modal-body label {
+  color: black;
+  font-weight: bold;
+  padding-left: 1px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-body button {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 auto;
 }
