@@ -12,20 +12,20 @@ function baseUrl() {
 function envio() {
   var url1 = baseUrl();
   alert("envio");
-  var request=$.ajax({
+  $.ajax({
     type: "POST",
     url: url1 + "User/Login/",
     dataType: "json",
+    async:false,
     data: {
       username: $("#usuario").val(),
-      password: $("#password").val()
+      password: $("#password").val(),
+      csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
     },
+    success: function(data) {
+      if (data != null) {
+        alert(data.token);
+      } 
+    }
   });
-  request.done(function(response,status){
-    console.log(response);
-});
-request.fail(function() {
-    alert("Hubo un error: ");
-});
-
 }

@@ -14,6 +14,8 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 """Importando los serializadores y modelos a utilizar"""
 
+import json
+
 
 @api_view(['GET'])
 def index(request):
@@ -140,6 +142,34 @@ def SoftwareDelete(request, idsoftware):
     return JsonResponse({"success": True}, status=400)
 
 
+@api_view(['POST'])
+def ObtenerToken(request):
+    print(request.data)
+    print(request.POST.get('username'))
+    print(request.POST.get('password'))
+    serializer = UserLoginSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    user, token = serializer.save()
+    print('usuario', user)
+    print('token', token)
+    data = {
+        'status': 'ok',
+        'token': 'token'
+    }
+    datajson=json.dumps(data)
+    return Response(datajson)
+
+def ObtenerTokenLink(request,username,password):
+    data={'username':username,'password':password}
+    serializer = UserLoginSerializer(data=data)
+    serializer.is_valid(raise_exception=True)
+    user, token = serializer.save()
+    data = {
+        'token': 'token'
+    }
+    return JsonResponse(data,safe=False)
+
+
 class SoftwareView(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = SoftwareSerializer
     queryset = Software.objects.all()
@@ -156,7 +186,21 @@ class UserView(viewsets.ModelViewSet):
 
 
 class UserLoginView(APIView):
-    
+
+    def get(self, request):
+        print(request.POST.get('username'))
+        print(request.POST.get('password'))
+        serializer = UserLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user, token = serializer.save()
+        print('usuario', user)
+        print('token', token)
+        data = {
+            'status': 'ok',
+            'token': token
+        }
+        return JsonResponse(data, status=status.HTTP_200_OK)
+
     def post(self, request):
         print(request.POST.get('username'))
         print(request.POST.get('password'))
