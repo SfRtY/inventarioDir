@@ -1,6 +1,12 @@
 $(document).ready(function() {
   $("#botonLogin").click(function() {
-    envio();
+    $('#error').empty();
+    if($("#usuario").val()=='' && $("#password").val()==''){
+      $('#error').append("<div class='alert alert-danger'role='alert'> Ingresar datos </div>");
+    }
+    else{
+      envio();  
+    }
   });
 });
 
@@ -11,12 +17,10 @@ function baseUrl() {
 
 function envio() {
   var url1 = baseUrl();
-  alert("envio");
   $.ajax({
     type: "POST",
     url: url1 + "User/Login/",
     dataType: "json",
-    async:false,
     data: {
       username: $("#usuario").val(),
       password: $("#password").val(),
@@ -25,7 +29,11 @@ function envio() {
     success: function(data) {
       if (data != null) {
         alert(data.token);
-      } 
+        Cookies.set('token',data.token);
+      }
+    },
+    error: function(){
+      $('#error').append("<div class='alert alert-danger'role='alert'> El usuario o la contraseña es incorrecta </div>");
     }
   });
 }

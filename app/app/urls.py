@@ -61,5 +61,4 @@ urlpatterns = [
     path('Empleado/<idarea>/',views.EmpleadoDetail),
 
     path('User/Login/',views.UserLoginView.as_view(),name='login'),
-    path('User/Login/<username>/<password>/',views.ObtenerTokenLink,name='login'),
 ]
