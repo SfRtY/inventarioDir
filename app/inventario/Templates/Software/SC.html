@@ -9,16 +9,7 @@
         <h1>INVENTARIO SOFTWARE</h1>
       </div>
       {%if messages%} {%for message in messages%}
-      <div
-        id="Message"
-        {%
-        if
-        message.tags
-        %}
-        class="{{message.tags}}"
-        {%endif%}
-        role="alert"
-      >
+      <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert">
         {{message}}
       </div>
       {%endfor%} {%endif%}
@@ -27,36 +18,19 @@
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Nombre del Software</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="nombre_software"
-              name="nombre_software"
-              maxlength="25"
-              required
-            />
+            <input type="text" class="form-control" id="nombre_software" name="nombre_software" maxlength="25"
+              required />
           </div>
         </div>
         <div class="form-group row">
-          <label for="" class="col-4 col-form-label"
-            >Version del Software</label
-          >
+          <label for="" class="col-4 col-form-label">Version del Software</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="version_software"
-              name="version_software"
-              maxlength="10"
-              onkeypress="return event.charCode >= 46 && event.charCode <= 57"
-              required
-            />
+            <input type="text" class="form-control" id="version_software" name="version_software" maxlength="10"
+              onkeypress="return event.charCode >= 46 && event.charCode <= 57" required />
           </div>
         </div>
         <div class="form-group row">
-          <label for="" class="col-4 col-form-label"
-            >Licencia de software</label
-          >
+          <label for="" class="col-4 col-form-label">Licencia de software</label>
           <div class="col-8">
             <select id="licencia_software" class="form-control" name="licencia_software">
               <option value="Si" selected>Si</option>
@@ -76,15 +50,8 @@
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Codigo del Bien</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              name="codigo_bien_s"
-              id="codigo_bien_s"
-              maxlength="12"
-              onkeypress="return event.charCode >= 46 && event.charCode <= 57"
-              required
-            />
+            <input type="text" class="form-control" name="codigo_bien_s" id="codigo_bien_s" maxlength="12"
+              onkeypress="return event.charCode >= 46 && event.charCode <= 57" required />
           </div>
         </div>
         <div class="form-group row">

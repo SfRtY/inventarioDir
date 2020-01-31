@@ -9,105 +9,51 @@ Harware {%endblock%} {%block insertcss%}
         <h1>ACTUALIZAR INVENTARIO HARDWARE: CPU</h1>
       </div>
       {%if messages%} {%for message in messages%}
-      <div
-        id="Message"
-        {%
-        if
-        message.tags
-        %}
-        class="{{message.tags}}"
-        {%endif%}
-        role="alert"
-      >
+      <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert">
         {{message}}
       </div>
       {%endfor%} {%endif%}
-      <form
-        class="col-12"
-        action="/Hardware/PC/Actualizar/{{querys.id_pc}}/"
-        method="POST"
-      >
+      <form class="col-12" action="/Hardware/PC/Actualizar/{{querys.id_pc}}/" method="POST">
         {% csrf_token %}
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Procesador:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="procesador_pc"
-              value="{{querys.procesador_pc}}"
-              name="procesador_pc"
-              maxlength="20"
-              required
-            />
+            <input type="text" class="form-control" id="procesador_pc" value="{{querys.procesador_pc}}"
+              name="procesador_pc" maxlength="20" required />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Velocidad:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="velocidad_pc"
-              value="{{querys.velocidad_pc}}"
-              name="velocidad_pc"
-              maxlength="10"
-              required
-            />
+            <input type="text" class="form-control" id="velocidad_pc" value="{{querys.velocidad_pc}}"
+              name="velocidad_pc" maxlength="10" required />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Memoria Ram:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="memoria_ram"
-              value="{{querys.memoria_ram}}"
-              name="memoria_ram"
-              maxlength="7"
-              required
-            />
+            <input type="text" class="form-control" id="memoria_ram" value="{{querys.memoria_ram}}" name="memoria_ram"
+              maxlength="7" required />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Almacenamiento:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="almacenamiento"
-              value="{{querys.almacenamiento}}"
-              name="almacenamiento"
-              maxlength="7"
-              required
-            />
+            <input type="text" class="form-control" id="almacenamiento" value="{{querys.almacenamiento}}"
+              name="almacenamiento" maxlength="7" required />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Tarjeta de Video:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="tarjeta_video"
-              value="{{querys.tarjeta_video}}"
-              name="tarjeta_video"
-              maxlength="15"
-            />
+            <input type="text" class="form-control" id="tarjeta_video" value="{{querys.tarjeta_video}}"
+              name="tarjeta_video" maxlength="15" />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Marca:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="marca"
-              value="{{querys.marca}}"
-              name="marca"
-              maxlength="8"
-            />
+            <input type="text" class="form-control" id="marca" value="{{querys.marca}}" name="marca" maxlength="8" />
           </div>
         </div>
         <div class="form-group row">
@@ -141,44 +87,24 @@ Harware {%endblock%} {%block insertcss%}
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Numero de Serie:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              name="numero_serie"
-              id="numero_serie"
-              maxlength="15"
-              value="{{querys.numero_serie}}"
-              onkeypress="return event.charCode >= 46 && event.charCode <= 57"
-            />
+            <input type="text" class="form-control" name="numero_serie" id="numero_serie" maxlength="15"
+              value="{{querys.numero_serie}}" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
           </div>
         </div>
 
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Modelo:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              name="modelo"
-              value="{{querys.modelo}}"
-              id="modelo"
-              maxlength="15"
-            />
+            <input type="text" class="form-control" name="modelo" value="{{querys.modelo}}" id="modelo"
+              maxlength="15" />
           </div>
         </div>
 
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Codigo Activo:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              name="codigo_activo"
-              value="{{querys.codigo_activo}}"
-              id="codigo_activo"
-              maxlength="12"
-              onkeypress="return event.charCode >= 46 && event.charCode <= 57"
-            />
+            <input type="text" class="form-control" name="codigo_activo" value="{{querys.codigo_activo}}"
+              id="codigo_activo" maxlength="12" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
           </div>
         </div>
 
@@ -248,8 +174,7 @@ Harware {%endblock%} {%block insertcss%}
           <label for="" class="col-4 col-form-label">Empleado Final</label>
           <div class="col-8">
             <select id="sempleado" class="form-control" name="dni_empleado">
-              <option id="ev" value="{{empleado.dni_empleado}}" selected
-                >{{empleado.nombre_empleado}}
+              <option id="ev" value="{{empleado.dni_empleado}}" selected>{{empleado.nombre_empleado}}
               </option>
             </select>
           </div>

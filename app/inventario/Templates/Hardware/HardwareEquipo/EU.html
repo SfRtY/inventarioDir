@@ -9,63 +9,31 @@ Harware {%endblock%} {%block insertcss%}
         <h1>ACTUALIZAR INVENTARIO HARDWARE: EQUIPO</h1>
       </div>
       {%if messages%} {%for message in messages%}
-      <div
-        id="Message"
-        {%
-        if
-        message.tags
-        %}
-        class="{{message.tags}}"
-        {%endif%}
-        role="alert"
-      >
+      <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert">
         {{message}}
       </div>
       {%endfor%} {%endif%}
-      <form
-        class="col-12"
-        action="/Hardware/Equipo/Actualizar/{{querys.id_equipo}}/"
-        method="POST"
-      >
+      <form class="col-12" action="/Hardware/Equipo/Actualizar/{{querys.id_equipo}}/" method="POST">
         {% csrf_token %}
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Nombre del Equipo:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              value="{{querys.nombre_equipo}}"
-              id="nombre_equipo"
-              name="nombre_equipo"
-              maxlength="25"
-              required
-            />
+            <input type="text" class="form-control" value="{{querys.nombre_equipo}}" id="nombre_equipo"
+              name="nombre_equipo" maxlength="25" required />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Marca:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="marca_equipo"
-              value="{{querys.marca_equipo}}"
-              name="marca_equipo"
-              maxlength="25"
-            />
+            <input type="text" class="form-control" id="marca_equipo" value="{{querys.marca_equipo}}"
+              name="marca_equipo" maxlength="25" />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Modelo:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              value="{{querys.modelo_equipo}}"
-              name="modelo_equipo"
-              id="modelo_equipo"
-              maxlength="25"
-            />
+            <input type="text" class="form-control" value="{{querys.modelo_equipo}}" name="modelo_equipo"
+              id="modelo_equipo" maxlength="25" />
           </div>
         </div>
         <div class="form-group row">
@@ -91,45 +59,25 @@ Harware {%endblock%} {%block insertcss%}
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Numero de Serie:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              id="numero_serie"
-              name="numero_serie"
-              value="{{querys.numero_serie}}"
-              maxlength="15"
-              onkeypress="return event.charCode >= 46 && event.charCode <= 57"
-            />
+            <input type="text" class="form-control" id="numero_serie" name="numero_serie"
+              value="{{querys.numero_serie}}" maxlength="15"
+              onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
           </div>
         </div>
 
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Codigo Activo:</label>
           <div class="col-8">
-            <input
-              type="text"
-              class="form-control"
-              name="codigo_activo"
-              value="{{querys.codigo_activo}}"
-              id="codigo_activo"
-              maxlength="12"
-              onkeypress="return event.charCode >= 46 && event.charCode <= 57"
-            />
+            <input type="text" class="form-control" name="codigo_activo" value="{{querys.codigo_activo}}"
+              id="codigo_activo" maxlength="12" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
           </div>
         </div>
 
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Descripcion:</label>
           <div class="col-8">
-            <textarea
-              class="form-control"
-              maxlength="50"
-              name="descripcion"
-              id="descripcion"
-              cols="30"
-              rows="2"
-            >{{querys.descripcion}}</textarea
-            >
+            <textarea class="form-control" maxlength="50" name="descripcion" id="descripcion" cols="30"
+              rows="2">{{querys.descripcion}}</textarea>
           </div>
         </div>
 
@@ -149,8 +97,7 @@ Harware {%endblock%} {%block insertcss%}
           <label for="" class="col-4 col-form-label">Empleado Final</label>
           <div class="col-8">
             <select id="sempleado" class="form-control" name="dni_empleado">
-              <option id="ev" value="{{empleado.dni_empleado}}" selected
-                >{{empleado.nombre_empleado}}
+              <option id="ev" value="{{empleado.dni_empleado}}" selected>{{empleado.nombre_empleado}}
               </option>
             </select>
           </div>
