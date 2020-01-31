@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from inventario.Serializer.serializerEq import EquipoSerializer
-from inventario.serializers import AreaSerializer, EmpleadoSerializer
+from inventario.Serializers.serializerEq import EquipoSerializer
+from inventario.Serializers.serializers import AreaSerializer, EmpleadoSerializer
 from inventario.models import Equipo, Area
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse

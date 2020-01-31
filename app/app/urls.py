@@ -17,8 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from rest_framework import routers
-from inventario import views
-from inventario.Views import HwPcView,HwEqView,HwUpsView
+from inventario.Views import HwPcView,HwEqView,HwUpsView,views
 
 router=routers.DefaultRouter()
 router.register(r'CSoftware',views.SoftwareView)

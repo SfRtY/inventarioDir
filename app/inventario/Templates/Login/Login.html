@@ -31,7 +31,14 @@
           <div class="modal-body">
             <div id="error">
             </div>
-            <form action="">
+            {%if messages%}
+            {%for message in messages%}
+            <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert">
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+            <form action="User/Login/" method="POST">
               {% csrf_token %}
               <div class="form-group row">
                 <label for="" class="col-sm-3 col-form-label">Usuario: </label>
@@ -41,6 +48,8 @@
                     class="form-control"
                     id="usuario"
                     placeholder="Usuario"
+                    name="username"
+                    required
                   />
                 </div>
               </div>
@@ -54,6 +63,8 @@
                     class="form-control"
                     id="password"
                     placeholder="Contraseña"
+                    name="password"
+                    required
                   />
                 </div>
               </div>
@@ -61,7 +72,7 @@
                 <label for="" class="col-sm-3 col-form-label">
                 </label>
                 <div class="col-sm-9">
-                  <button type="button" class="btn btn-primary btn-lg" id="botonLogin">
+                  <button type="submit" class="btn btn-primary btn-lg" id="botonLogin">
                     INGRESAR
                   </button>
                 </div>
@@ -73,6 +84,4 @@
     </div>
   </body>
   {% bootstrap_javascript jquery='full' %}
-  <script src="{% static 'js/jqlog.js' %}"></script>
-  <script src="{% static 'js/js.cookie.js' %}"></script>
 </html>

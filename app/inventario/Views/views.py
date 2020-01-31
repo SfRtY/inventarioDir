@@ -1,7 +1,8 @@
 """Importando de rest_framework"""
-from .serializers import (SoftwareSerializer, AreaSerializer,
-                          EmpleadoSerializer, UserSerializer, UserLoginSerializer)
-from .models import (Software, Area, Empleado)
+import json
+from inventario.Serializers.serializers import (
+    SoftwareSerializer, AreaSerializer, EmpleadoSerializer, UserSerializer, UserLoginSerializer)
+from inventario.models import (Software, Area, Empleado)
 from django.shortcuts import render, get_object_or_404, redirect
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -13,8 +14,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 """Importando los serializadores y modelos a utilizar"""
-
-import json
 
 
 @api_view(['GET'])
@@ -140,7 +139,8 @@ def SoftwareDelete(request, idsoftware):
         print("elimino")
         return JsonResponse({"success": True}, status=200)
     return JsonResponse({"success": True}, status=400)
-    
+
+
 class SoftwareView(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = SoftwareSerializer
     queryset = Software.objects.all()
@@ -162,12 +162,15 @@ class UserLoginView(APIView):
         print(request.POST.get('username'))
         print(request.POST.get('password'))
         serializer = UserLoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user, token = serializer.save()
-        print('usuario', user)
-        print('token', token)
-        data = {
-            'status': 'ok',
-            'token': token
-        }
-        return JsonResponse(data, status=status.HTTP_200_OK)
+        if serializer.is_valid():
+            user, token = serializer.save()
+            print('usuario', user)
+            print('token', token)
+            data = {
+                'status': 'ok',
+                'token': token
+            }
+            return redirect('PCC')
+        messages.error(request, 'El usuario o la contraseña son invalidos',
+                       extra_tags='col-12 alert alert-danger')
+        return redirect('index')

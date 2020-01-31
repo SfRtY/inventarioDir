@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import (Software, Area, Empleado, Estabilizador, Pc)
+from inventario.models import (Software, Area, Empleado, Estabilizador, Pc)
 
 from django.contrib.auth.models import User
 
