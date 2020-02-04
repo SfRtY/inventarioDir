@@ -9,24 +9,30 @@ Harware {%endblock%} {%block insertcss%}
         <h1>INVENTARIO HARDWARE: EQUIPO</h1>
       </div>
       {%if messages%} {%for message in messages%}
-      <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert"></div>
-      {{message}}
-    </div>
-    {%endfor%}{%endif%}
+      <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert">
+        {{message}}
+      </div>
+      {%endfor%} {%endif%}
     <form class="col-12" action="/Hardware/Equipo/EC/" method="POST">
       {% csrf_token %}
       <div class="form-group row">
-        <label for="" class="col-4 col-form-label">Nombre del Equipo:</label>
+        <label for="" class="col-4 col-form-label">Nombre del equipo:</label>
         <div class="col-8">
-          <input type="text" class="form-control" placeholder="Impresora Multifuncional" id="nombre_equipo"
-            name="nombre_equipo" maxlength="25" required />
+          <select id="sequipo" class="form-control" name="nombre_equipo">
+            {%for q in querynombre%} {% if forloop.first %}
+            <option value="{{q.id_marca}}" selected>{{q.nombre_marca}}</option>
+            {%else%}
+            <option value="{{q.id_marca}}">{{q.nombre_marca}}</option>
+            {% endif %} {%endfor%}
+          </select>
         </div>
       </div>
+
       <div class="form-group row">
-        <label for="" class="col-4 col-form-label">Marca:</label>
+        <label for="" class="col-4 col-form-label">Marca</label>
         <div class="col-8">
-          <input type="text" class="form-control" id="marca_equipo" placeholder="Epson" name="marca_equipo"
-            maxlength="25" />
+          <select id="smarca" class="form-control" name="marca_equipo">
+          </select>
         </div>
       </div>
       <div class="form-group row">
@@ -102,5 +108,6 @@ Harware {%endblock%} {%block insertcss%}
 </div>
 {%endblock%} {%block insertjs%}
 <script src="{% static 'js/jqnw.js' %}"></script>
+<script src="{% static 'js/jqgm.js' %}"></script>
 {%endblock%}
 </div>

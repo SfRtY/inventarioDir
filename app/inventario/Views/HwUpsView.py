@@ -7,16 +7,13 @@ from inventario.models import Estabilizador,Area
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import JsonResponse
 from django.contrib import messages
-
-def AreaData():
-    queryset=Area.objects.all()
-    return queryset
+from inventario.Views.viewAreaData import MarcaData,AreaData
 
 def UpsIndex(request):
-    return render(request,'Hardware/HardwareUps/UC.html',{'queryarea':AreaData()})
+    return render(request,'Hardware/HardwareUps/UC.html',{'queryarea':AreaData(), 'querymarca':MarcaData(18)})
 
 def BUpsIndex(request):
-    return render(request,'Hardware/HardwareUps/UR.html',{'queryarea':AreaData()})
+    return render(request,'Hardware/HardwareUps/UR.html',{'queryarea':AreaData(), 'querymarca':MarcaData(18)})
 
 def UpsDniEmpleado(request,dniempleado):
     query=Estabilizador.objects.filter(dni_empleado=dniempleado)
@@ -54,7 +51,7 @@ def UpsGetUpdate(request,idestabilizador):
         sempleado=EmpleadoSerializer(empleado,many=False)
         serializer = UpsSerializer(ups)
         querys=serializer.data
-        return render(request,'Hardware/HardwareUps/UU.html',{'querys':serializer.data,'queryarea':AreaData(),'area':sarea.data,'empleado':sempleado.data})
+        return render(request,'Hardware/HardwareUps/UU.html',{'querys':serializer.data,'queryarea':AreaData(), 'querymarca':MarcaData(18),'area':sarea.data,'empleado':sempleado.data})
     elif request.method == 'POST':
         print("estas en post")
         serializer = UpsSerializer(ups,data=request.data)

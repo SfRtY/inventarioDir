@@ -14,15 +14,13 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes,authentication_classes
 
-def AreaData():
-    queryset=Area.objects.all()
-    return queryset
+from inventario.Views.viewAreaData import AreaData, MarcaData
 
 @api_view(['GET'])
 #@permission_classes((IsAuthenticated, ))
 #@authentication_classes((TokenAuthentication, ))
 def PCIndex(request):
-    return render(request,'Hardware/HardwarePC/PCC.html',{'queryarea':AreaData()})
+    return render(request,'Hardware/HardwarePC/PCC.html',{'queryarea':AreaData(), 'querymarca':MarcaData(17)})
 
 def BPCIndex(request):
     return render(request,'Hardware/HardwarePC/PCR.html',{'queryarea':AreaData()})
@@ -63,7 +61,7 @@ def PcGetUpdate(request,idpc):
         sempleado=EmpleadoSerializer(empleado,many=False)
         serializer = PcSerializer(pc)
         querys=serializer.data
-        return render(request,'Hardware/HardwarePC/PCU.html',{'querys':serializer.data,'queryarea':AreaData(),'area':sarea.data,'empleado':sempleado.data})
+        return render(request,'Hardware/HardwarePC/PCU.html',{'querys':serializer.data,'queryarea':AreaData(),'querymarca':MarcaData(17),'area':sarea.data,'empleado':sempleado.data})
     elif request.method == 'POST':
         print("estas en post")
         serializer = PcSerializer(pc, data=request.data)

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from inventario.models import (Software, Area, Empleado, Estabilizador, Pc)
+from inventario.models import (Software, Area, Empleado, Estabilizador, Pc, Marca)
 
 from django.contrib.auth.models import User
 
@@ -38,6 +38,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email')
+
+class MarcaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Marca
+        fields = ('id_marca','nombre_marca','tipo_marca')
 
 
 class UserLoginSerializer(serializers.Serializer):

@@ -50,12 +50,20 @@ Harware {%endblock%} {%block insertcss%}
               name="tarjeta_video" maxlength="15" />
           </div>
         </div>
+
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Marca:</label>
           <div class="col-8">
-            <input type="text" class="form-control" placeholder="Lenovo" id="marca" name="marca" maxlength="8" />
+            <select id="smarca" class="form-control" name="marca">
+              {%for q in querymarca%} {% if forloop.first %}
+              <option value="{{q.id_marca}}" selected>{{q.nombre_marca}}</option>
+              {%else%}
+              <option value="{{q.id_marca}}">{{q.nombre_marca}}</option>
+              {% endif %} {%endfor%}
+            </select>
           </div>
         </div>
+
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Tipo de Equipo:</label>
           <div class="col-8">

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from rest_framework import routers
-from inventario.Views import HwPcView,HwEqView,HwUpsView,views
+from inventario.Views import HwPcView,HwEqView,HwUpsView,views,viewAreaData
 
 router=routers.DefaultRouter()
 router.register(r'CSoftware',views.SoftwareView)
@@ -57,7 +57,9 @@ urlpatterns = [
     path('Software/Eliminar/<idsoftware>/',views.SoftwareDelete,name='SD'),
     
     path('obtener/<idarea>/',views.EmpleadoJson, name="prueba"),
+    path('obtener/Marca/<tipoMarca>/',viewAreaData.MarcaDataJson),
     path('Empleado/<idarea>/',views.EmpleadoDetail),
 
     path('User/Login/',views.UserLoginView.as_view(),name='login'),
+
 ]

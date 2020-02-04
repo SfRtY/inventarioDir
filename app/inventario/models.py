@@ -77,8 +77,8 @@ class Empleado(models.Model):
 
 class Equipo(models.Model):
     id_equipo = models.AutoField(primary_key=True)
-    nombre_equipo = models.CharField(max_length=25)
-    marca = models.ForeignKey('Marca', models.DO_NOTHING, db_column='marca', blank=True, null=True)
+    nombre_equipo = models.IntegerField()
+    marca_equipo = models.ForeignKey('Marca', models.DO_NOTHING, db_column='marca_equipo', blank=True, null=True)
     modelo_equipo = models.CharField(max_length=25, blank=True, null=True)
     estado_equipo = models.CharField(max_length=15)
     numero_serie = models.CharField(max_length=15, blank=True, null=True)

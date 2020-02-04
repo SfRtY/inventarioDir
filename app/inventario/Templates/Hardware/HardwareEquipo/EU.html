@@ -15,11 +15,17 @@ Harware {%endblock%} {%block insertcss%}
       {%endfor%} {%endif%}
       <form class="col-12" action="/Hardware/Equipo/Actualizar/{{querys.id_equipo}}/" method="POST">
         {% csrf_token %}
+
         <div class="form-group row">
-          <label for="" class="col-4 col-form-label">Nombre del Equipo:</label>
+          <label for="" class="col-4 col-form-label">Nombre del equipo:</label>
           <div class="col-8">
-            <input type="text" class="form-control" value="{{querys.nombre_equipo}}" id="nombre_equipo"
-              name="nombre_equipo" maxlength="25" required />
+            <select id="sequipo" class="form-control" name="nombre_equipo">
+              {% for q in querynombre %} {% if querys.nombre_equipo == q.id_marca %}
+              <option value="{{q.id_marca}}" selected>{{q.nombre_marca}}</option>
+              {%else%}
+              <option value="{{q.id_marca}}">{{q.nombre_marca}}</option>
+              {% endif %} {%endfor%}
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -116,5 +122,6 @@ Harware {%endblock%} {%block insertcss%}
   </div>
   {%endblock%} {%block insertjs%}
   <script src="{% static 'js/jqu.js' %}"></script>
+  <script src="{% static 'js/jque.js' %}"></script>
   {%endblock%}
 </div>

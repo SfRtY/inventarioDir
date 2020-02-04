@@ -7,26 +7,19 @@ from inventario.models import Equipo, Area
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib import messages
-
-
-def AreaData():
-    queryset = Area.objects.all()
-    return queryset
-
+from .viewAreaData import AreaData, MarcaData
 
 def EquipoIndex(request):
-    return render(request, 'Hardware/HardwareEquipo/EC.html', {'queryarea': AreaData()})
-
+    return render(request, 'Hardware/HardwareEquipo/EC.html', {'queryarea': AreaData(), 'querynombre':MarcaData(0)})
 
 def BEquipoIndex(request):
-    return render(request, 'Hardware/HardwareEquipo/ER.html', {'queryarea': AreaData()})
+    return render(request, 'Hardware/HardwareEquipo/ER.html', {'queryarea': AreaData(), 'querynombre':MarcaData(0)})
 
 
 def EquipoDniEmpleado(request, dniempleado):
     query = Equipo.objects.filter(dni_empleado=dniempleado)
     querys = EquipoSerializer(query, many=True)
     return JsonResponse(querys.data, safe=False)
-
 
 @api_view(['GET', 'POST'])
 def EquipoGetAllCreate(request):
@@ -61,8 +54,9 @@ def EquipoGetUpdate(request, idequipo):
         empleado = equipo.dni_empleado
         sempleado = EmpleadoSerializer(empleado, many=False)
         serializer = EquipoSerializer(equipo)
-        querys = serializer.data
-        return render(request, 'Hardware/HardwareEquipo/EU.html', {'querys': serializer.data, 'queryarea': AreaData(), 'area': sarea.data, 'empleado': sempleado.data})
+        print(serializer.data)
+        print(MarcaData(0))
+        return render(request, 'Hardware/HardwareEquipo/EU.html', {'querys': serializer.data, 'querynombre':MarcaData(0), 'queryarea': AreaData(), 'area': sarea.data, 'empleado': sempleado.data})
     elif request.method == 'POST':
         print("estas en post")
         serializer = EquipoSerializer(equipo, data=request.data)
