@@ -15,7 +15,6 @@
             </div>
             <form class="col-12" action="" method="POST">
                 {% csrf_token %}
-
                 <div class="form-group row">
                     <label for="" class="col-4 col-form-label">Area:</label>
                     <div class="col-8">
@@ -72,6 +71,7 @@
 </div>
 {%endblock%}
 {%block insertjs%}
+<script src="{% static 'js/js.cookie.js' %}"></script>
 <script src="{% static 'js/jqnw.js' %}"></script>
 <script src="{% static 'js/jqrs.js' %}"></script>
 <script src="{% static 'alertifyjs/alertify.js' %}"></script>

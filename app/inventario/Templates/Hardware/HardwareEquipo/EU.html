@@ -13,44 +13,46 @@ Harware {%endblock%} {%block insertcss%}
         {{message}}
       </div>
       {%endfor%} {%endif%}
-      <form class="col-12" action="/Hardware/Equipo/Actualizar/{{querys.id_equipo}}/" method="POST">
+      <form class="col-12" action="/Hardware/Equipo/Actualizar/{{querys.id_hardware_periferico}}/" method="POST">
         {% csrf_token %}
 
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Nombre del equipo:</label>
           <div class="col-8">
-            <select id="sequipo" class="form-control" name="nombre_equipo">
-              {% for q in querynombre %} {% if querys.nombre_equipo == q.id_marca %}
-              <option value="{{q.id_marca}}" selected>{{q.nombre_marca}}</option>
+            <select id="sequipo" class="form-control" name="nombre_hardware_periferico">
+              {% for q in querynombre %} {% if querys.nombre_hardware_periferico == q.id_marca %}
+              <option id="" value="{{q.id_marca}}" selected>{{q.nombre_marca}}</option>
               {%else%}
               <option value="{{q.id_marca}}">{{q.nombre_marca}}</option>
               {% endif %} {%endfor%}
             </select>
           </div>
         </div>
+
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Marca:</label>
           <div class="col-8">
-            <input type="text" class="form-control" id="marca_equipo" value="{{querys.marca_equipo}}"
-              name="marca_equipo" maxlength="25" />
+            <select id="smarca" class="form-control" name="marca">
+              <option id="vmarca" value={{querys.marca}} selected>{{querymarca}}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Modelo:</label>
           <div class="col-8">
-            <input type="text" class="form-control" value="{{querys.modelo_equipo}}" name="modelo_equipo"
-              id="modelo_equipo" maxlength="25" />
+            <input type="text" class="form-control" value="{{querys.modelo}}" name="modelo"
+              id="modelo" maxlength="25" />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Estado:</label>
           <div class="col-8">
-            <select id="sestado" class="form-control" name="estado_equipo">
-              {%if querys.estado_equipo == "Nuevo"%}
+            <select id="sestado" class="form-control" name="estado">
+              {%if querys.estado == "Nuevo"%}
               <option value="Nuevo" selected>Nuevo</option>
               <option value="Regular">Regular</option>
               <option value="Malo">Malo</option>
-              {%elif querys.estado_equipo == "Regular"%}
+              {%elif querys.estado == "Regular"%}
               <option value="Nuevo">Nuevo</option>
               <option value="Regular" selected>Regular</option>
               <option value="Malo">Malo</option>
@@ -92,7 +94,7 @@ Harware {%endblock%} {%block insertcss%}
           <div class="col-8">
             <select id="sarea" class="form-control" name="">
               {%for q in queryarea%} {% if area.id_area == q.id_area %}
-              <option value="{{q.id_area}}" selected>{{q.nombre_area}}</option>
+              <option  value="{{q.id_area}}" selected>{{q.nombre_area}}</option>
               {%else%}
               <option value="{{q.id_area}}">{{q.nombre_area}}</option>
               {% endif %} {%endfor%}
@@ -108,6 +110,8 @@ Harware {%endblock%} {%block insertcss%}
             </select>
           </div>
         </div>
+
+        <input type="hidden" id="date_inicio_cargo_hp" name="date_inicio_cargo_hp" value="{{querys.date_inicio_cargo_hp}}">
 
         <div class="form-group row">
           <label for="" class="col-4 col-form-label"></label>

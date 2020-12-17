@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from rest_framework import routers
-from inventario.Views import HwPcView,HwEqView,HwUpsView,views,viewAreaData
+from inventario.Views import HwPcView,HwEqView,HwUpsView,views,viewAreaData,adminView
 
 router=routers.DefaultRouter()
 router.register(r'CSoftware',views.SoftwareView)
@@ -25,41 +25,41 @@ router.register(r'Area',views.AreaView)
 router.register(r'User',views.UserView)
 
 urlpatterns = [
+    path('admin/cargo/',adminView.passPosition),
+    path('admin/Cargo/',adminView.cargo),
+    path('admin/Reporte/<dni_empleado>/',adminView.databyEmpl),
+    path('obtener/grafica/<idarea>/',adminView.dataGrafic),
+    path('admin/Reporte/',adminView.graficReport,name="reporte"),
     path('admin/', admin.site.urls),
     path('api/',include(router.urls)),
     path('',views.index,name='index'),
     path('Hardware/IngresarCPU/',HwPcView.PCIndex,name='PCC'),
-    path('Hardware/PCC/',HwPcView.PcGetAllCreate),
+    path('Hardware/PCC/',HwPcView.PcGetAllCreate,name='createPC'),
     path('Hardware/Buscar/CPU/',HwPcView.BPCIndex,name="PCR"),
     path('Hardware/PC/BuscarByEmpleado/<dniempleado>/',HwPcView.PCDniEmpleado),
     path('Hardware/PC/Actualizar/<idpc>/',HwPcView.PcGetUpdate,name="PCU"),
     path('Hardware/PC/Eliminar/<idpc>/',HwPcView.PcDelete,name="PCD"),
-
     path('Hardware/IngresarEquipo/',HwEqView.EquipoIndex,name="EC"),
     path('Hardware/Equipo/EC/',HwEqView.EquipoGetAllCreate),
     path('Hardware/Buscar/Equipo/',HwEqView.BEquipoIndex,name="ER"),
     path('Hardware/Equipo/BuscarByEmpleado/<dniempleado>/',HwEqView.EquipoDniEmpleado),
     path('Hardware/Equipo/Actualizar/<idequipo>/',HwEqView.EquipoGetUpdate,name="EU"),
     path('Hardware/Equipo/Eliminar/<idequipo>/',HwEqView.EquipoDelete,name="ED"),
-
     path('Hardware/IngresarEstabilizador/',HwUpsView.UpsIndex,name="UC"),
     path('Hardware/Estabilizador/UC/',HwUpsView.UpsGetAllCreate),
     path('Hardware/Buscar/Estabilizador/',HwUpsView.BUpsIndex,name="UR"),
     path('Hardware/Estabilizador/BuscarByEmpleado/<dniempleado>/',HwUpsView.UpsDniEmpleado),
     path('Hardware/Estabilizador/Actualizar/<idestabilizador>/',HwUpsView.UpsGetUpdate,name="UU"),
     path('Hardware/Estabilizador/Eliminar/<idestabilizador>/',HwUpsView.UpsDelete,name="UD"),
-    
     path('Software/IngresarSoftware/',views.SoftwareIndex, name='SC'),
     path('Software/Buscar/Software/',views.BSoftwareIndex, name='SR'),
     path('Software/SC/',views.SoftwareGetPost),
     path('Software/BuscarByEmpleado/<dniempleado>/',views.SoftwareDniEmpleado),
     path('Software/Actualizar/<idsoftware>/',views.SoftwareGetUpdate,name='SU'),
     path('Software/Eliminar/<idsoftware>/',views.SoftwareDelete,name='SD'),
-    
     path('obtener/<idarea>/',views.EmpleadoJson, name="prueba"),
     path('obtener/Marca/<tipoMarca>/',viewAreaData.MarcaDataJson),
     path('Empleado/<idarea>/',views.EmpleadoDetail),
-
     path('User/Login/',views.UserLoginView.as_view(),name='login'),
 
 ]

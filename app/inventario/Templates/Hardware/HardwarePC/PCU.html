@@ -6,27 +6,27 @@ Harware {%endblock%} {%block insertcss%}
   <div class="col-12 main-section">
     <div class="modal-content">
       <div class="col-12 user-img">
-        <h1>ACTUALIZAR INVENTARIO HARDWARE: CPU</h1>
+        <h1>ACTUALIZAR INVENTARIO HARDWARE: Computadora</h1>
       </div>
       {%if messages%} {%for message in messages%}
       <div id="Message" {% if message.tags %} class="{{message.tags}}" {%endif%} role="alert">
         {{message}}
       </div>
       {%endfor%} {%endif%}
-      <form class="col-12" action="/Hardware/PC/Actualizar/{{querys.id_pc}}/" method="POST">
+      <form class="col-12" action="/Hardware/PC/Actualizar/{{querys.id_hardware_comp}}/" method="POST">
         {% csrf_token %}
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Procesador:</label>
           <div class="col-8">
-            <input type="text" class="form-control" id="procesador_pc" value="{{querys.procesador_pc}}"
-              name="procesador_pc" maxlength="20" required />
+            <input type="text" class="form-control" id="procesador" value="{{querys.procesador}}"
+              name="procesador" maxlength="20" required />
           </div>
         </div>
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Velocidad:</label>
           <div class="col-8">
-            <input type="text" class="form-control" id="velocidad_pc" value="{{querys.velocidad_pc}}"
-              name="velocidad_pc" maxlength="10" required />
+            <input type="text" class="form-control" id="velocidad" value="{{querys.velocidad}}"
+              name="velocidad" maxlength="10" required />
           </div>
         </div>
         <div class="form-group row">
@@ -67,18 +67,18 @@ Harware {%endblock%} {%block insertcss%}
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Tipo de Equipo:</label>
           <div class="col-8">
-            <select id="tipo_equipo" class="form-control" name="tipo_equipo">
-              {%if querys.tipo_equipo == "CPU" %}
+            <select id="tipo_hardware_comp" class="form-control" name="tipo_hardware_comp">
+              {%if querys.tipo_hardware_comp == "CPU" %}
               <option value="CPU" selected>CPU</option>
               <option value="Laptop">Laptop</option>
               <option value="Servidor">Servidor</option>
               <option value="Tablet">Tablet</option>
-              {%elif querys.tipo_equipo == "Laptop"%}
+              {%elif querys.tipo_hardware_comp == "Laptop"%}
               <option value="CPU">CPU</option>
               <option value="Laptop" selected>Laptop</option>
               <option value="Servidor">Servidor</option>
               <option value="Tablet">Tablet</option>
-              {%elif querys.tipo_equipo == "Servidor"%}
+              {%elif querys.tipo_hardware_comp == "Servidor"%}
               <option value="CPU">CPU</option>
               <option value="Laptop">Laptop</option>
               <option value="Servidor" selected>Servidor</option>
@@ -187,6 +187,8 @@ Harware {%endblock%} {%block insertcss%}
             </select>
           </div>
         </div>
+
+        <input type="hidden" id="date_inicio_cargo_hc" name="date_inicio_cargo_hc" value="{{querys.date_inicio_cargo_hc}}">
 
         <div class="form-group row">
           <label for="" class="col-4 col-form-label"></label>

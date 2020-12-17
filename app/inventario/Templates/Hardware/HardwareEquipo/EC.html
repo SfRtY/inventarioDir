@@ -18,7 +18,7 @@ Harware {%endblock%} {%block insertcss%}
       <div class="form-group row">
         <label for="" class="col-4 col-form-label">Nombre del equipo:</label>
         <div class="col-8">
-          <select id="sequipo" class="form-control" name="nombre_equipo">
+          <select id="sequipo" class="form-control" name="nombre_hardware_periferico">
             {%for q in querynombre%} {% if forloop.first %}
             <option value="{{q.id_marca}}" selected>{{q.nombre_marca}}</option>
             {%else%}
@@ -31,20 +31,20 @@ Harware {%endblock%} {%block insertcss%}
       <div class="form-group row">
         <label for="" class="col-4 col-form-label">Marca</label>
         <div class="col-8">
-          <select id="smarca" class="form-control" name="marca_equipo">
+          <select id="smarca" class="form-control" name="marca">
           </select>
         </div>
       </div>
       <div class="form-group row">
         <label for="" class="col-4 col-form-label">Modelo:</label>
         <div class="col-8">
-          <input type="text" class="form-control" name="modelo_equipo" id="modelo_equipo" maxlength="25" />
+          <input type="text" class="form-control" name="modelo" id="modelo" maxlength="25" />
         </div>
       </div>
       <div class="form-group row">
         <label for="" class="col-4 col-form-label">Estado:</label>
         <div class="col-8">
-          <select id="estado_equipo" class="form-control" name="estado_equipo">
+          <select id="estado" class="form-control" name="estado">
             <option value="Nuevo" selected>Nuevo</option>
             <option value="Regular">Regular</option>
             <option value="Malo">Malo</option>

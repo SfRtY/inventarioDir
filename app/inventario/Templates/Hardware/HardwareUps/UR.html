@@ -44,14 +44,14 @@ Hardware {%endblock%} {%block insertcss%}
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">Potencia Watts</th>
-                            <th scope="col">Potencia VA</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Numero de Serie</th>
-                            <th scope="col">Actualizar</th>
-                            <th scope="col">Eliminar</th>
+                            <th scope="col-sm" class="prioridad-1">#</th>
+                            <th scope="col-sm" class="prioridad-2">Marca</th>
+                            <th scope="col-sm" class="prioridad-3">Potencia Watts</th>
+                            <th scope="col-sm" class="prioridad-4">Potencia VA</th>
+                            <th scope="col-sm" class="prioridad-5">Tipo</th>
+                            <th scope="col-sm" class="prioridad-6">Numero de Serie</th>
+                            <th scope="col-sm" class="prioridad-7">Actualizar</th>
+                            <th scope="col-sm" class="prioridad-8">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="tbody"></tbody>
@@ -63,6 +63,7 @@ Hardware {%endblock%} {%block insertcss%}
     </div>
 </div>
 {%endblock%} {%block insertjs%}
+<script src="{% static 'js/js.cookie.js' %}"></script>
 <script src="{% static 'js/jqnw.js' %}"></script>
 <script src="{% static 'js/jqru.js' %}"></script>
 <script src="{% static 'alertifyjs/alertify.js' %}"></script>

@@ -17,27 +17,27 @@ function recargartabla() {
           );
         } else {
           for (var i = 0; i <= data.length; i++) {
-            var funcion = "eliminarsino(" + data[i].id_estabilizador + ")";
+            var funcion = "eliminarsino(" + data[i].id_hardware_regulador + ")";
             var url_actualizar =
               "'/Hardware/Estabilizador/Actualizar/" +
-              data[i].id_estabilizador +
+              data[i].id_hardware_regulador +
               "/'";
             $("#tbody").append(
-              "<tr><th scope='row'>" +
+              "<tr><th scope='row' class='prioridad-1'>" +
                 i +
-                "</th><td>" +
-                data[i].marca_estabilizador +
-                "</td><td>" +
+                "</th><td class='prioridad-2'>" +
+                data[i].marca_hardware_regulador +
+                "</td><td class='prioridad-3'>" +
                 data[i].potencia_watts +
-                "</td><td>" +
-                data[i].potencia_va +
-                "</td><td>" +
-                data[i].tipo_estabilizador +
-                "</td><td>" +
+                "</td><td class='prioridad-4'>" +
+                data[i].potencia_voltaje +
+                "</td><td class='prioridad-5'>" +
+                data[i].tipo_hardware_regulador +
+                "</td><td class='prioridad-6'>" +
                 data[i].numero_serie +
-                "</td><td><a class='btn btn-warning btn-sm' href=" +
+                "</td><td class='prioridad-7'><a class='btn btn-warning btn-sm' href=" +
                 url_actualizar +
-                ">Actualizar</a></td><td><a class='btn btn-danger btn-sm' onclick='" +
+                ">Actualizar</a></td><td class='prioridad-8'><a class='btn btn-danger btn-sm' onclick='" +
                 funcion +
                 "')'>Eliminar</a></td></tr>"
             );
@@ -64,6 +64,7 @@ function eliminar(id) {
   var url1 = baseUrl();
   $.ajax({
     type: "POST",
+    data:{'csrfmiddlewaretoken':Cookies.get('csrftoken')},
     url: url1 + "Hardware/Estabilizador/Eliminar/" + idhw + "/",
     success: function(response) {
       console.log(response);

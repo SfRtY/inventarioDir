@@ -3,24 +3,33 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from inventario.Serializers.serializerUps import UpsSerializer
 from inventario.Serializers.serializers import AreaSerializer,EmpleadoSerializer
-from inventario.models import Estabilizador,Area
+from inventario.models import Estabilizador,Area,Marca,Empleado
+from django.contrib.auth.models import auth
+from rest_framework.authtoken.models import Token
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from inventario.Views.viewAreaData import MarcaData,AreaData
+from django.core import serializers
+from django.contrib.auth.decorators import login_required
+import datetime
 
+@login_required
 def UpsIndex(request):
     return render(request,'Hardware/HardwareUps/UC.html',{'queryarea':AreaData(), 'querymarca':MarcaData(18)})
 
+@login_required
 def BUpsIndex(request):
     return render(request,'Hardware/HardwareUps/UR.html',{'queryarea':AreaData(), 'querymarca':MarcaData(18)})
 
+@login_required
 def UpsDniEmpleado(request,dniempleado):
-    query=Estabilizador.objects.filter(dni_empleado=dniempleado)
+    query=Estabilizador.objects.filter(dni_empleado=dniempleado).filter(date_final_cargo_hr=None)
     querys=UpsSerializer(query,many=True)
     return JsonResponse(querys.data,safe=False)
 
 @api_view(['GET','POST'])
+@login_required
 def UpsGetAllCreate(request):
     if request.method=='GET':
         ups=Estabilizador.objects.all()
@@ -28,7 +37,9 @@ def UpsGetAllCreate(request):
         return Response(upsserializer.data)
     elif request.method=='POST':
         print(request.data)
-        upsserializer=UpsSerializer(data=request.data)
+        solicitud=request.POST.copy()
+        solicitud['date_inicio_cargo_hr']=datetime.datetime.now().date()
+        upsserializer=UpsSerializer(data=solicitud)
         if upsserializer.is_valid():
             upsserializer.save()
             msg="El inventario del estabilizador se almaceno correctamente"
@@ -39,9 +50,10 @@ def UpsGetAllCreate(request):
             return redirect("UC")
 
 @api_view(['GET','POST'])
+@login_required
 def UpsGetUpdate(request,idestabilizador):
     try:
-        ups=Estabilizador.objects.get(id_estabilizador=idestabilizador)
+        ups=Estabilizador.objects.get(id_hardware_regulador=idestabilizador)
     except:
         return JsonResponse({"error":404}, status=404)
     if request.method == 'GET':
@@ -66,7 +78,7 @@ def UpsGetUpdate(request,idestabilizador):
 @api_view(['POST'])
 def UpsDelete(request,idestabilizador):
     try:
-        ups=Estabilizador.objects.get(id_estabilizador=idestabilizador)
+        ups=Estabilizador.objects.get(id_hardware_regulador=idestabilizador)
     except:
         return JsonResponse({"success":404}, status=404)
     if request.method == 'POST':

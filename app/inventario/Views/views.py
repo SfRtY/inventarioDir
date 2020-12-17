@@ -13,7 +13,11 @@ from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from django.http import QueryDict
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as do_login
 """Importando los serializadores y modelos a utilizar"""
+from django.contrib.auth.decorators import login_required
 
 
 @api_view(['GET'])
@@ -39,7 +43,7 @@ def SoftwareDniEmpleado(request, dniempleado):
     querys = SoftwareSerializer(query, many=True)
     return JsonResponse(querys.data, safe=False)
 
-
+@login_required
 def EmpleadoJson(request, idarea):
     query = Empleado.objects.filter(id_area=idarea)
     querys = EmpleadoSerializer(query, many=True)
@@ -159,8 +163,15 @@ class UserView(viewsets.ModelViewSet):
 class UserLoginView(APIView):
 
     def post(self, request):
-        print(request.POST.get('username'))
-        print(request.POST.get('password'))
+        user=authenticate(username=request.POST.get('username'),password=request.POST.get('password'))
+        print(user)
+        if user is not None:
+            do_login(request,user)
+            return redirect('PCC')
+        else:
+            messages.error(request, 'El usuario o la contraseña son invalidos', extra_tags='col-12 alert alert-danger')
+            return redirect('index')
+        '''lista={'username':request.POST.get('username'),'password':request.POST.get('password')}
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             user, token = serializer.save()
@@ -170,7 +181,7 @@ class UserLoginView(APIView):
                 'status': 'ok',
                 'token': token
             }
-            return redirect('PCC')
+            return JsonResponse({"token":token})
         messages.error(request, 'El usuario o la contraseña son invalidos',
                        extra_tags='col-12 alert alert-danger')
-        return redirect('index')
+        return redirect('index')'''

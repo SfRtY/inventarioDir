@@ -38,7 +38,7 @@
             </div>
             {%endfor%}
             {%endif%}
-            <form action="User/Login/" method="POST">
+            <form action="User/Login/" method="POST" id="formulario">
               {% csrf_token %}
               <div class="form-group row">
                 <label for="" class="col-sm-3 col-form-label">Usuario: </label>
@@ -72,7 +72,7 @@
                 <label for="" class="col-sm-3 col-form-label">
                 </label>
                 <div class="col-sm-9">
-                  <button type="submit" class="btn btn-primary btn-lg" id="botonLogin">
+                  <button type="submit" class="btn btn-primary btn-lg" id="btnLogin">
                     INGRESAR
                   </button>
                 </div>

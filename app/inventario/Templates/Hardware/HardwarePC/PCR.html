@@ -11,11 +11,10 @@ Hardware {%endblock%} {%block insertcss%}
   <div class="col-12 main-section">
     <div class="modal-content">
       <div class="col-12 user-img">
-        <h1>BUSCAR HARDWARE: CPU</h1>
+        <h1>BUSCAR HARDWARE: Computadora</h1>
       </div>
       <form class="col-12" action="" method="POST">
         {% csrf_token %}
-
         <div class="form-group row">
           <label for="" class="col-4 col-form-label">Area:</label>
           <div class="col-8">
@@ -39,7 +38,7 @@ Hardware {%endblock%} {%block insertcss%}
         <div class="form-group row">
           <div class="col-12">
             <button type="button" id="botonbuscar" class="btn btn-primary mb-2">
-              <i class="fas fa-sign-in-alt"></i> BUSCAR CPU
+              <i class="fas fa-sign-in-alt"></i> BUSCAR
             </button>
           </div>
         </div>
@@ -47,14 +46,14 @@ Hardware {%endblock%} {%block insertcss%}
         <table class="table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Procesador</th>
-              <th scope="col">Velocidad</th>
-              <th scope="col">Memoria Ram</th>
-              <th scope="col">Almacenamiento</th>
-              <th scope="col">Tipo de Equipo</th>
-              <th scope="col">Actualizar</th>
-              <th scope="col">Eliminar</th>
+              <th scope="col-sm" class="prioridad-1">#</th>
+              <th scope="col-sm" class="prioridad-2">Procesador</th>
+              <th scope="col-sm" class="prioridad-3">Velocidad</th>
+              <th scope="col-sm" class="prioridad-4">Memoria Ram</th>
+              <th scope="col-sm" class="prioridad-5">Almacenamiento</th>
+              <th scope="col-sm" class="prioridad-6">Tipo de Equipo</th>
+              <th scope="col-sm" class="prioridad-7">Actualizar</th>
+              <th scope="col-sm" class="prioridad-8">Eliminar</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -66,6 +65,7 @@ Hardware {%endblock%} {%block insertcss%}
   </div>
 </div>
 {%endblock%} {%block insertjs%}
+<script src="{% static 'js/js.cookie.js' %}"></script>
 <script src="{% static 'js/jqnw.js' %}"></script>
 <script src="{% static 'js/jqrpc.js' %}"></script>
 <script src="{% static 'alertifyjs/alertify.js' %}"></script>

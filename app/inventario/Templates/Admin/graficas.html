@@ -1,0 +1,294 @@
+{% load i18n static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+  {% block extrastyle %}{% endblock %}
+  {% if LANGUAGE_BIDI %}
+  <link rel="stylesheet" type="text/css"
+    href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+  {% block extrahead %}{% endblock %}
+  {% block responsive %}
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive.css" %}">
+  {% if LANGUAGE_BIDI %}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
+  {% endblock %}
+  {% block blockbots %}
+  <meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+</head>
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+  data-admin-utc-offset="{% now "Z" %}">
+
+  <!-- Container -->
+  <div id="container">
+
+    {% if not is_popup %}
+    <!-- Header -->
+    
+    <div id="header">
+      <div id="branding">
+        <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a>
+        </h1>
+      </div>
+      {% block usertools %}
+      <div id="user-tools">
+        {% block welcome-msg %}
+        {% trans 'Welcome,' %}
+        <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+        {% endblock %}
+        {% block userlinks %}
+        <a href="{% url 'reporte' %}">Reportes</a> /
+        {% if site_url %}
+        <a href="{{ site_url }}">{% trans 'View site' %}</a> /
+        {% endif %}
+        {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}
+        <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+        {% endif %}
+        {% endif %}
+        {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+        {% endif %}
+        <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+        {% endblock %}
+      </div>
+      {% endblock %}
+      {% block nav-global %}
+      {% endblock %}
+    </div>
+    <!-- END Header -->
+    
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      {% if title %} &rsaquo; {{ title }}{% endif %}
+    </div>
+    {% endblock %}
+    {% endif %}
+
+    {% block messages %}
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|capfirst }}</li>
+        {% endfor %}</ul>
+    {% endif %}
+    {% endblock messages %}
+
+
+    <!-- Content -->
+    <div id="content" class="{% block coltype %}colM{% endblock %}">
+      <div id="content">
+        <div>
+          <form>
+            <div class="form-row">
+              <div class="col-md-12" style="margin-bottom: 10px !important;">
+                <label for="inpArea">Area</label>
+                <select id="slcArea" name="inpArea" class="form-control form-control-sm">
+                  {%for q in queryarea%} {% if forloop.first %}
+                  <option value="{{q.id_area}}" selected>{{q.nombre_area}}</option>
+                  {%else%}
+                  <option value="{{q.id_area}}">{{q.nombre_area}}</option>
+                  {% endif %} {%endfor%}
+                </select>
+              </div>
+              <div class="col-md-12">
+                <button type="button" id="btnconsultar">Consultar</button>
+              </div>
+            </div>
+          </form>
+          <button style="margin-top: 10px;" type="button" id="pdf">Imprimir PDF</button>
+        </div>
+        <canvas id="myChart" width="5000" height="1000" style="margin-bottom: 100px !important;"></canvas>
+        <table id="tblEmpl" style="width:100%">
+          <tr>
+            <th>Nombre Empleado</th>
+            <th>N°Pc</th>
+            <th>N°Servidor</th>
+            <th>N°Laptop</th>
+            <th>N°Tablet</th>
+            <th>N°Estabilizador</th>
+            <th>N°UPS</th>
+            <th>N°Otros</th>
+            <th>Detalles</th>
+          </tr>
+        </table>
+
+      </div>
+      
+    </div>
+    <!-- END Content -->
+
+
+  </div>
+  <!-- END Container -->
+</body>
+
+</html>
+<!-- Content -->
+
+<!-- END Content -->
+
+</div>
+<script src="{% static 'js/jspdf.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jspdf.plugin.autotable.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="{% static 'js/chartjs.plugin.label.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    window.myChart;
+    $.ajax({
+      type: "GET",
+      url: baseUrl() + "obtener/grafica/01/",
+      dataType: "json",
+      success: function (data) {
+        if (data == null) {
+          console.log(data);
+          alert(`no se pudo traer datos`);
+        } else {
+          console.log(data);
+          var ctx = document.getElementById('myChart').getContext('2d');
+          myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Pc", "Servidor", "Laptop", "Tablet", "Estabilizador", "UPS", "Otros"],
+              datasets: [{
+                label: "Population (millions)",
+                backgroundColor: ["#800080", "#0000FF", "#008000", "#FF0000", "#000000", "#00FFFF", "#597B67"],
+                data: [data.graf.PC, data.graf.Servidor, data.graf.Laptop, data.graf.Tablet, data.graf.Estabilizador, data.graf.UPS, data.graf.Otros]
+              }]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'CANTIDAD DE EQUIPOS DEL AREA DE ' + data.graf.Area+ ' - Numero Total = '+data.graf.total
+              },
+              plugins: {
+                labels:[
+    {
+      render: 'label',
+      arc:true,
+      position: 'outside'
+    },
+    {
+      render: 'percentage',
+      fontColor: ["black", "black", "black", "white", "white", "black", "white"],
+      precision:2
+
+    }
+  ]
+    }
+            }
+          });
+          // LLenado de datos de la tabla
+          
+          for(var i=0;data.tbl.length;i++){
+            url_detalle=baseUrl()+"admin/Reporte/"+data.tbl[i].Dni+"/";
+            $("#tblEmpl").append("<tr><td>"+data.tbl[i].Nombre+"</td><td>"+data.tbl[i].PC+"</td><td>"+data.tbl[i].Servidor+"</td><td>"+data.tbl[i].Laptop+"</td><td>"+data.tbl[i].Tablet+"</td><td>"+data.tbl[i].Estabilizador+"</td><td>"+data.tbl[i].UPS+"</td><td>"+data.tbl[i].Otros+"</td><td><a href="+url_detalle+">Detalles</a></td><</tr>");
+          }
+        }
+
+      }
+    });
+    $("#btnconsultar").click(function (e) {
+      drawGrafic();
+    });
+    $("#pdf").click(function(){
+      generarpdf()
+    });
+  });
+  function generarpdf(){
+    id_area = $("#slcArea").val();
+    $.ajax({
+      type: "GET",
+      url: baseUrl() + "obtener/grafica/" + id_area + "/",
+      dataType: "json",
+      success: function (data) {
+        if (data == null) {
+          console.log(data);
+          alert(`no se pudo traer datos`);
+        } else {
+          html2canvas($("#myChart"), {
+    onrendered: function(canvas) {         
+        var imgData = canvas.toDataURL(
+            'image/png');              
+        var doc = new jsPDF('l', 'mm');
+        var columns = ["Nombre de empleado", "PC", "Servidor", "Tablet","Laptop","Estabilizador","Ups","Otros"];
+        var datos=[];
+        for(var i=0;i<parseInt(data.tbl.length,10);i++){
+        d=[data.tbl[i].Nombre,data.tbl[i].PC,data.tbl[i].Servidor,data.tbl[i].Tablet,data.tbl[i].Laptop,data.tbl[i].Estabilizador,data.tbl[i].UPS,data.tbl[i].Otros];
+        datos.push(d);
+        }
+        doc.addImage(imgData, 'PNG', -145, 10,600,160);
+        doc.addPage();
+        doc.text(14,10,"AREA DE "+data.graf.Area);
+        doc.text(14,16,"NUMERO TOTAL = "+data.graf.total);
+        doc.autoTable(columns,datos,{ margin:{ top: 20 }});
+        doc.save('sample-file.pdf');
+    }
+});
+          
+        }
+
+      }
+    });
+  }
+  function baseUrl() {
+    var href = window.location.href.split("/");
+    return href[0] + "//" + href[2] + "/";
+  }
+
+  function drawGrafic() {
+    id_area = $("#slcArea").val();
+    $.ajax({
+      type: "GET",
+      url: baseUrl() + "obtener/grafica/" + id_area + "/",
+      dataType: "json",
+      success: function (data) {
+        if (data == null) {
+          console.log(data);
+          alert(`no se pudo traer datos`);
+        } else {
+          console.log(data);
+          $("#tblEmpl").empty();
+          myChart.destroy();
+          var ctx = document.getElementById('myChart').getContext('2d');
+          myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Pc", "Servidor", "Laptop", "Tablet", "Estabilizador", "UPS", "Otros"],
+              datasets: [{
+                label: "Population (millions)",
+                backgroundColor: ["#800080", "#0000FF", "#008000", "#FF0000", "#000000", "#00FFFF", "#597B67"],
+                data: [data.graf.PC, data.graf.Servidor, data.graf.Laptop, data.graf.Tablet, data.graf.Estabilizador, data.graf.UPS, data.graf.Otros]
+              }]
+
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Cantidad de equipos en el area de ' + data.graf.Area
+              },
+            }
+          });
+          $("#tblEmpl").append("<tr><th>Nombre Empleado</th><th># Pc</th><th># Servidor</th><th># Laptop</th><th># Tablet</th><th># Estabilizador</th><th># UPS</th><th># Otros</th></tr>");
+          for(var i=0;data.tbl.length;i++){
+            url_detalle=baseUrl()+"admin/Reporte/"+data.tbl[i].Dni+"/";
+            $("#tblEmpl").append("<tr><td>"+data.tbl[i].Nombre+"</td><td>"+data.tbl[i].PC+"</td><td>"+data.tbl[i].Servidor+"</td><td>"+data.tbl[i].Laptop+"</td><td>"+data.tbl[i].Tablet+"</td><td>"+data.tbl[i].Estabilizador+"</td><td>"+data.tbl[i].UPS+"</td><td>"+data.tbl[i].Otros+"</td><td><a href="+url_detalle+">Detalles</a></td></tr>");
+          }
+        }
+
+      }
+    });
+  }
+</script>
+</body>
+</html>

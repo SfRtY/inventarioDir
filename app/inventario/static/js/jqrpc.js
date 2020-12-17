@@ -17,25 +17,25 @@ function recargartabla() {
           );
         } else {
           for (var i = 0; i <= data.length; i++) {
-            var funcion = "eliminarsino(" + data[i].id_pc + ")";
+            var funcion = "eliminarsino(" + data[i].id_hardware_comp + ")";
             var url_actualizar =
-              "'/Hardware/PC/Actualizar/" + data[i].id_pc + "/'";
+              "'/Hardware/PC/Actualizar/" + data[i].id_hardware_comp + "/'";
             $("#tbody").append(
-              "<tr><th scope='row'>" +
+              "<tr><th scope='row' class='prioridad-1'>" +
                 i +
-                "</th><td>" +
-                data[i].procesador_pc +
-                "</td><td>" +
-                data[i].velocidad_pc +
-                "</td><td>" +
+                "</th><td class='prioridad-2'>" +
+                data[i].procesador +
+                "</td><td class='prioridad-3'>" +
+                data[i].velocidad +
+                "</td><td class='prioridad-4'>" +
                 data[i].memoria_ram +
-                "</td><td>" +
+                "</td><td class='prioridad-5'>" +
                 data[i].almacenamiento +
-                "</td><td>" +
-                data[i].tipo_equipo +
-                "</td><td><a class='btn btn-warning btn-sm' href=" +
+                "</td><td class='prioridad-6'>" +
+                data[i].tipo_hardware_comp +
+                "</td><td class='prioridad-7'><a class='btn btn-warning btn-sm' href=" +
                 url_actualizar +
-                ">Actualizar</a></td><td><a class='btn btn-danger btn-sm' onclick='" +
+                ">Actualizar</a></td><td class='prioridad-8'><a class='btn btn-danger btn-sm' onclick='" +
                 funcion +
                 "')'>Eliminar</a></td></tr>"
             );
@@ -61,6 +61,7 @@ function eliminar(id) {
   var url1 = baseUrl();
   $.ajax({
     type: "POST",
+    data:{'csrfmiddlewaretoken':Cookies.get('csrftoken')},
     url: url1 + "Hardware/PC/Eliminar/" + idhw + "/",
     success: function(response) {
       console.log(response);

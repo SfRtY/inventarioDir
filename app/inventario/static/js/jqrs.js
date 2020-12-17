@@ -62,6 +62,7 @@ function eliminar(id) {
   var url1 = baseUrl();
   $.ajax({
     type: "POST",
+    data:{'csrfmiddlewaretoken':Cookies.get('csrftoken')},
     url: url1 + "Software/Eliminar/" + idsoftware + "/",
     success: function(response) {
       console.log(response);

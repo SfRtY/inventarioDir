@@ -17,25 +17,25 @@ function recargartabla() {
           );
         } else {
           for (var i = 0; i <= data.length; i++) {
-            var funcion = "eliminarsino(" + data[i].id_equipo + ")";
+            var funcion = "eliminarsino(" + data[i].id_hardware_periferico + ")";
             var url_actualizar =
-              "'/Hardware/Equipo/Actualizar/" + data[i].id_equipo + "/'";
+              "'/Hardware/Equipo/Actualizar/" + data[i].id_hardware_periferico + "/'";
             $("#tbody").append(
-              "<tr><th scope='row'>" +
+              "<tr><th scope='row' class='prioridad-1'>" +
                 i +
-                "</th><td>" +
-                data[i].nombre_equipo +
-                "</td><td>" +
-                data[i].marca_equipo +
-                "</td><td>" +
-                data[i].modelo_equipo +
-                "</td><td>" +
-                data[i].estado_equipo +
-                "</td><td>" +
+                "</th><td class='prioridad-2'>" +
+                data[i].nombre_hardware_periferico +
+                "</td><td class='prioridad-3'>" +
+                data[i].marca +
+                "</td><td class='prioridad-4'>" +
+                data[i].modelo +
+                "</td><td class='prioridad-5'>" +
+                data[i].estado +
+                "</td><td class='prioridad-6'>" +
                 data[i].numero_serie +
-                "</td><td><a class='btn btn-warning btn-sm' href=" +
+                "</td><td class='prioridad-7'><a class='btn btn-warning btn-sm' href=" +
                 url_actualizar +
-                ">Actualizar</a></td><td><a class='btn btn-danger btn-sm' onclick='" +
+                ">Actualizar</a></td><td class='prioridad-8'><a class='btn btn-danger btn-sm' onclick='" +
                 funcion +
                 "')'>Eliminar</a></td></tr>"
             );
@@ -62,6 +62,7 @@ function eliminar(id) {
   var url1 = baseUrl();
   $.ajax({
     type: "POST",
+    data:{'csrfmiddlewaretoken':Cookies.get('csrftoken')},
     url: url1 + "Hardware/Equipo/Eliminar/" + idhw + "/",
     success: function(response) {
       console.log(response);

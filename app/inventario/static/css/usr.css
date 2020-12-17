@@ -4,9 +4,18 @@ body {
   background-color: darkgray;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 991px) {
   body {
     background: url(../imagenes/196435.jpg) center center fixed !important;
+  }
+  .prioridad-3{
+    display: none;
+  }
+  .prioridad-4{
+    display: none;
+  }
+  .prioridad-5{
+    display: none;
   }
 }
 

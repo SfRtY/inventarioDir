@@ -1,0 +1,234 @@
+{% load i18n static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+  {% block extrastyle %}{% endblock %}
+  {% if LANGUAGE_BIDI %}
+  <link rel="stylesheet" type="text/css"
+    href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+  {% block extrahead %}{% endblock %}
+  {% block responsive %}
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive.css" %}">
+  {% if LANGUAGE_BIDI %}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
+  {% endblock %}
+  {% block blockbots %}
+  <meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+</head>
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+  data-admin-utc-offset="{% now "Z" %}">
+
+  <!-- Container -->
+  <div id="container">
+
+    {% if not is_popup %}
+    <!-- Header -->
+    <div id="header">
+      <div id="branding">
+        <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a>
+        </h1>
+      </div>
+      {% block usertools %}
+      <div id="user-tools">
+        {% block welcome-msg %}
+        {% trans 'Welcome,' %}
+        <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+        {% endblock %}
+        {% block userlinks %}
+        <a href="{% url 'reporte' %}">Reportes</a> /
+        {% if site_url %}
+        <a href="{{ site_url }}">{% trans 'View site' %}</a> /
+        {% endif %}
+        {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}
+        <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+        {% endif %}
+        {% endif %}
+        {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+        {% endif %}
+        <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+        {% endblock %}
+      </div>
+      {% endblock %}
+      {% block nav-global %}
+      {% endblock %}
+    </div>
+    <!-- END Header -->
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+      {% if title %} &rsaquo; {{ title }}{% endif %}
+    </div>
+    {% endblock %}
+    {% endif %}
+
+    {% block messages %}
+    {% if messages %}
+    <ul class="messagelist">{% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|capfirst }}</li>
+        {% endfor %}</ul>
+    {% endif %}
+    {% endblock messages %}
+
+
+    <!-- Content -->
+    <div id="content" class="{% block coltype %}colM{% endblock %}">
+      <div id="content">
+        <div>
+          <form>
+            {% csrf_token %}
+            <h2>Empleado que pasa el cargo:</h2>
+            <div class="form-row">
+              <div class="col-md-12" style="margin-bottom: 10px !important;">
+                <label for="inpArea">Area</label>
+                <select id="sarea" name="inpArea" class="form-control form-control-sm">
+                  {%for q in queryarea%} {% if forloop.first %}
+                  <option value="{{q.id_area}}" selected>{{q.nombre_area}}</option>
+                  {%else%}
+                  <option value="{{q.id_area}}">{{q.nombre_area}}</option>
+                  {% endif %} {%endfor%}
+                </select>
+              </div>
+              <div class="col-md-12" style="margin-bottom: 10px !important;">
+                <label >Empleado</label>
+                  <select id="sempleado" class="form-control" name="dni_empleado">
+                  </select>
+              </div>
+              <h2>Empleado que recibe el cargo:</h2>
+              <div class="col-md-12" style="margin-bottom: 10px !important;">
+                <label for="inpArea">Area</label>
+                <select id="sarea1" name="inpArea" class="form-control form-control-sm">
+                  {%for q in queryarea%} {% if forloop.first %}
+                  <option value="{{q.id_area}}" selected>{{q.nombre_area}}</option>
+                  {%else%}
+                  <option value="{{q.id_area}}">{{q.nombre_area}}</option>
+                  {% endif %} {%endfor%}
+                </select>
+              </div>
+              <div class="col-md-12" style="margin-bottom: 10px !important;">
+                <label >Empleado</label>
+                  <select id="sempleado1" class="form-control" name="dni_empleado">
+                  </select>
+              </div>
+              <div class="form-group row">
+              <div class="col-md-12">
+                <button type="button" id="btncargo">Pasar Cargo</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+
+      </div>
+    </div>
+    <!-- END Content -->
+
+
+  </div>
+  <!-- END Container -->
+</body>
+
+</html>
+<!-- Content -->
+
+<!-- END Content -->
+
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="{% static 'js/js.cookie.js' %}"></script>
+<script>
+  $(document).ready(function() {
+  recargarlista();
+  recargarlista1();
+  $("#btncargo").click(function(){
+    cargo();
+  }  
+  );
+  $("#sarea1").change(function() {
+    recargarlista1();
+  });
+  $("#sarea").change(function() {
+    recargarlista();
+  });
+
+});
+
+function cargo(){
+    var dni0=$("#sempleado").val();
+    var dni1=$("#sempleado1").val();
+    $.ajax({
+        type:'POST',
+        url:baseUrl()+"admin/cargo/",
+        data:{'csrfmiddlewaretoken':Cookies.get('csrftoken'),"dni0":dni0,"dni1":dni1},
+        success:function(data){
+          alert(data.lol);
+        }}
+    );
+}
+
+function baseUrl() {
+  var href = window.location.href.split("/");
+  return href[0] + "//" + href[2] + "/";
+}
+
+
+function recargarlista1() {
+  $("#sempleado1").empty();
+  var idarea = $("#sarea1").val();
+  var url1 = baseUrl();
+  $.ajax({
+    type: "GET",
+    url: url1 + "obtener/" + idarea + "/",
+    dataType: "json",
+    success: function(data) {
+      if (data == null) {
+        alert(`no se pudo traer datos`);
+      } else {
+        for (var i = 0; i <= data.length; i++) {
+          var dni = data[i].dni_empleado;
+          $("#sempleado1").append(
+            "<option value=" + dni + ">" + data[i].nombre_empleado + "</option>"
+          );
+        }
+      }
+    }
+  });
+}
+
+function recargarlista() {
+  $("#sempleado").empty();
+  var idarea = $("#sarea").val();
+  var url1 = baseUrl();
+  $.ajax({
+    type: "GET",
+    url: url1 + "obtener/" + idarea + "/",
+    dataType: "json",
+    success: function(data) {
+      if (data == null) {
+        alert(`no se pudo traer datos`);
+      } else {
+        for (var i = 0; i <= data.length; i++) {
+          var dni = data[i].dni_empleado;
+          $("#sempleado").append(
+            "<option value=" + dni + ">" + data[i].nombre_empleado + "</option>"
+          );
+        }
+      }
+    }
+  });
+}
+
+</script>
+</body>
+</html>

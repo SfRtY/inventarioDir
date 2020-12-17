@@ -18,14 +18,14 @@
             </div>
             {%endfor%}
             {%endif%}
-            <form class="col-12" action="/Hardware/Estabilizador/Actualizar/{{querys.id_estabilizador}}/" method="POST">
+            <form class="col-12" action="/Hardware/Estabilizador/Actualizar/{{querys.id_hardware_regulador}}/" method="POST">
                 {% csrf_token %}
 
                 <div class="form-group row">
                     <label for="" class="col-4 col-form-label">Tipo de Equipo:</label>
                     <div class="col-8">
-                        <select id="sestado" class="form-control" name="tipo_estabilizador">
-                            {%if querys.tipo_estabilizador == "Estabillizador"%}
+                        <select id="sestado" class="form-control" name="tipo_hardware_regulador">
+                            {%if querys.tipo_hardware_regulador == "Estabillizador"%}
                             <option value="Estabilizador" selected>Estabilizador</option>
                             <option value="UPS">UPS</option>
                             {%else%}
@@ -39,8 +39,8 @@
                 <div class="form-group row">
                     <label for="" class="col-4 col-form-label">Marca del Equipo:</label>
                     <div class="col-8">
-                      <select id="smarca" class="form-control" name="marca_estabilizador">
-                        {%for q in querymarca%} {% if querys.marca_estabilizador == q.id_marca %}
+                      <select id="smarca" class="form-control" name="marca_hardware_regulador">
+                        {%for q in querymarca%} {% if querys.marca_hardware_regulador == q.id_marca %}
                         <option value="{{q.id_marca}}" selected>{{q.nombre_marca}}</option>
                         {%else%}
                         <option value="{{q.id_marca}}">{{q.nombre_marca}}</option>
@@ -59,7 +59,7 @@
                 <div class="form-group row">
                     <label for="" class="col-4 col-form-label">Potencia en VA:</label>
                     <div class="col-8">
-                        <input type="text" class="form-control" name="potencia_va" value="{{querys.potencia_va}}"
+                        <input type="text" class="form-control" name="potencia_voltaje" value="{{querys.potencia_voltaje}}"
                             maxlength="10">
                     </div>
                 </div>
@@ -84,12 +84,12 @@
                 <div class="form-group row">
                     <label for="" class="col-4 col-form-label">Estado:</label>
                     <div class="col-8">
-                        <select id="sestado" class="form-control" name="estado_estabilizador">
-                            {%if querys.estado_estabilizador == "Nuevo"%}
+                        <select id="sestado" class="form-control" name="estado">
+                            {%if querys.estado == "Nuevo"%}
                             <option value="Nuevo" selected>Nuevo</option>
                             <option value="Regular">Regular</option>
                             <option value="Malo">Malo</option>
-                            {%elif querys.estado_estabilizador == "Regular"%}
+                            {%elif querys.estado == "Regular"%}
                             <option value="Nuevo">Nuevo</option>
                             <option value="Regular" selected>Regular</option>
                             <option value="Malo">Malo</option>
@@ -125,6 +125,8 @@
                         </select>
                     </div>
                 </div>
+
+                <input type="hidden" id="date_inicio_cargo_hr" name="date_inicio_cargo_hr" value="{{querys.date_inicio_cargo_hr}}">
 
                 <div class="form-group row">
                     <label for="" class="col-4 col-form-label"></label>

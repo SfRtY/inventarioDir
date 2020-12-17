@@ -1,5 +1,6 @@
-from inventario.models import Area,Marca
+from inventario.models import Area,Marca,Estabilizador,Empleado,Pc,Equipo
 from inventario.Serializers.serializers import MarcaSerializer
+from inventario.Serializers.serializerUps import UpsSerializer
 from django.http import JsonResponse
 
 def AreaData():
